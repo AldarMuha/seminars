@@ -6,6 +6,7 @@ function App() {
   const seminars = useFetch(url);
   return (
     <div className="App">
+      <h1 className="main-heading">Список семинаров</h1>
       <ul className="card-list">
         {
           seminars.map((seminar) => (
