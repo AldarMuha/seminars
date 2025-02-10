@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import Card from '../card/card';
+import Modal from '../modal/modal';
 
 function App() {
   const url = 'http://localhost:3001/seminars';
   const [seminars, setSeminars] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currenSeminar, setCurrentSeminar] = useState(null);
   const fetchData = (url) => {
     fetch(url)
       .then(response => {
@@ -27,6 +30,16 @@ function App() {
     setError(null);
     fetchData(url);
   }, []);
+
+  const onEdit = (seminar) => {
+    setCurrentSeminar(seminar);
+    setIsModalOpen(true);
+  };
+
+  const onCloseModal = () => {
+    setIsModalOpen(false);
+    setCurrentSeminar(null);
+  }
 
   if (isLoading) {
     return (
@@ -68,11 +81,12 @@ function App() {
         <ul className="card-list">
           {
             seminars.map((seminar) => (
-              <Card key={seminar.id} {...seminar} onClick={() => onDelete(seminar.id)} />
+              <Card key={seminar.id} {...seminar} onClick={() => onDelete(seminar.id)} onEdit={() => onEdit(seminar)} />
             ))
           }
         </ul>
       </div>
+      {isModalOpen ? <Modal seminar={currenSeminar} onClose={onCloseModal} /> : ''}
     </div>
   );
 }

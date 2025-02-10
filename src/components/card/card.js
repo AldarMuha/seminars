@@ -1,29 +1,11 @@
 const DEFAULT_SRC = '/no-image.jpg';
 
-function Card({ title, description, date, time, photo, onClick }) {
+function Card({ title, description, date, time, photo, onClick, onEdit }) {
     const onError = (e) => {
         e.target.onerror = null;
         e.target.src = DEFAULT_SRC;
     }
-    /*
-        const onDelete = () => {
-            fetch(`http://localhost:3001/seminars/:${id}`,
-                {
-                    method: 'DELETE'
-                }
-            )
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Не удалось удалить семинар');
-                    }
-                    onClick(seminars.filter((item) => item.id !== id));
-                })
-                .catch((error) => {
-                    console.log(error);
-                    alert('Не удалось удалить семинар');
-                })
-        };
-        */
+
     return (
         <li className="card-item">
             <div className="card">
@@ -32,6 +14,7 @@ function Card({ title, description, date, time, photo, onClick }) {
                 <p className="card-date">{date}</p>
                 <p className="card-time">{time}</p>
                 <img className="card-photo" src={photo} alt={title} width="200" height="200" onError={onError} />
+                <button type="button" onClick={onEdit}>Редактировать</button>
                 <button type="button" onClick={onClick}>Удалить</button>
             </div>
         </li>
