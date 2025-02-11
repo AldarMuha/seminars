@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { formatDateFromServer, formatDateToServer } from "../../utils";
+const DEFAULT_SRC = '/no-image.jpg';
 
 function Modal({ seminar, onClose, onUpdated }) {
     const [isSending, setIsSending] = useState(false);
@@ -8,6 +9,10 @@ function Modal({ seminar, onClose, onUpdated }) {
     const [date, setDate] = useState(formatDateFromServer(seminar.date));
     const [time, setTime] = useState(seminar.time);
     const [photo, setPhoto] = useState(seminar.photo);
+    const onError = (e) => {
+        e.target.onerror = null;
+        e.target.src = DEFAULT_SRC;
+    }
 
     useEffect(() => {
         if (seminar) {
@@ -81,7 +86,7 @@ function Modal({ seminar, onClose, onUpdated }) {
                     <input type="time" id="time" value={time} onChange={(e) => setTime(e.target.value)} />
                     <label className="form-label" htmlFor="photo">URL изображения</label>
                     <input type="file" accept="image/*" onChange={handleFileChange} />
-                    {photo && <img src={photo} alt="Preview" style={{ width: '250px', height: '250px' }} />}
+                    {photo && <img src={photo} alt="Preview" style={{ width: '250px', height: '250px' }} onError={onError} />}
                     <button type="submit" disabled={isSending}>{isSending ? 'Отправка...' : 'Отправить'}</button>
                     <button type="button" onClick={onClose}>Закрыть</button>
                 </form>
