@@ -37,5 +37,7 @@
 ## Запуск приложения
 
 npm i - установка зависимостей
+
 json-server --watch seminars.json --port 3001  - запуск json-server
+
 npm start - запуск приложения
