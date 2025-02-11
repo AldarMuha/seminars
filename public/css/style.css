@@ -2,12 +2,28 @@ body{
     margin: 0;
 }
 .main {
-    margin: 0 auto;
+    margin: 20px auto;
+    font-family: Arial, Helvetica, sans-serif;
 }
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+  }
 
 .cards-heading{
     margin: 0 auto;
     text-align: center;
+    text-transform: uppercase;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .card-list {
@@ -20,10 +36,106 @@ body{
     @media (min-width: 600px) {
         grid-template-columns: 1fr 1fr;
     }
+    @media (min-width: 1200px) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+.card-item {
+    display: flex;
 }
 
 .card{
     padding: 20px;
-    border: 1px solid blue;
+    border: 2px solid blue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
 }
 
+.card-title {
+    margin: 0;
+    text-align: center;
+}
+
+.card-description {
+    margin: 0;
+}
+
+.card-photo {
+    display: block;
+    margin: 0 auto;
+}
+
+.card-date,
+.card-time{
+    margin: 0;
+}
+
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; 
+}
+
+.modal {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    max-width: 500px; 
+    width: 100%;
+    position: relative; 
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column; 
+}
+
+.form-label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-input,
+textarea,
+input[type="file"] {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+textarea {
+    resize: vertical; /* Позволяет изменять размер только по вертикали */
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff; /* Цвет фона кнопки */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Плавный переход для фона */
+}
+
+button:hover {
+    background-color: #0056b3; /* Темнее при наведении */
+}
+
+button:disabled {
+    background-color: #ccc; /* Цвет для отключенной кнопки */
+    cursor: not-allowed; /* Курсор для отключенной кнопки */
+}

@@ -79,7 +79,7 @@ function App() {
 
   return (
     <div className="main">
-      <h1 className="main-heading">Семинары</h1>
+      <h1 className="visually-hidden">Семинары</h1>
       <div className="cards-container">
         <h2 className="cards-heading">Список семинаров</h2>
         <ul className="card-list">

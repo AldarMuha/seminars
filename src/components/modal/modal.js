@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
+import { formatDateFromServer, formatDateToServer } from "../../utils";
 
 function Modal({ seminar, onClose, onUpdated }) {
     const [isSending, setIsSending] = useState(false);
     const [title, setTitle] = useState(seminar.title);
     const [description, setDescription] = useState(seminar.description);
-    const [date, setDate] = useState(seminar.date);
+    const [date, setDate] = useState(formatDateFromServer(seminar.date));
     const [time, setTime] = useState(seminar.time);
     const [photo, setPhoto] = useState(seminar.photo);
 
@@ -12,7 +13,7 @@ function Modal({ seminar, onClose, onUpdated }) {
         if (seminar) {
             setTitle(seminar.title);
             setDescription(seminar.description);
-            setDate(seminar.date);
+            setDate(formatDateFromServer(seminar.date));
             setTime(seminar.time);
             setPhoto(seminar.photo);
         }
@@ -36,7 +37,7 @@ function Modal({ seminar, onClose, onUpdated }) {
             ...seminar,
             title,
             description,
-            date,
+            date: formatDateToServer(date),
             photo,
         };
         fetch(`http://localhost:3001/seminars/${seminar.id}`, {
@@ -80,7 +81,7 @@ function Modal({ seminar, onClose, onUpdated }) {
                     <input type="time" id="time" value={time} onChange={(e) => setTime(e.target.value)} />
                     <label className="form-label" htmlFor="photo">URL изображения</label>
                     <input type="file" accept="image/*" onChange={handleFileChange} />
-                    {photo && <img src={photo} alt="Preview" style={{ width: '200px', height: '200px' }} />}
+                    {photo && <img src={photo} alt="Preview" style={{ width: '250px', height: '250px' }} />}
                     <button type="submit" disabled={isSending}>{isSending ? 'Отправка...' : 'Отправить'}</button>
                     <button type="button" onClick={onClose}>Закрыть</button>
                 </form>

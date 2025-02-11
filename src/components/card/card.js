@@ -13,7 +13,7 @@ function Card({ title, description, date, time, photo, onClick, onEdit }) {
                 <p className="card-description">{description}</p>
                 <p className="card-date">{date}</p>
                 <p className="card-time">{time}</p>
-                <img className="card-photo" src={photo} alt={title} width="200" height="200" onError={onError} />
+                <img className="card-photo" src={photo} alt={title} width="250" height="250" onError={onError} />
                 <button type="button" onClick={onEdit}>Редактировать</button>
                 <button type="button" onClick={onClick}>Удалить</button>
             </div>
