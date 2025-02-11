@@ -9,6 +9,7 @@ function App() {
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currenSeminar, setCurrentSeminar] = useState(null);
+
   const fetchData = (url) => {
     fetch(url)
       .then(response => {
@@ -22,8 +23,9 @@ function App() {
       })
       .finally(() => {
         setIsLoading(false);
-      })
+      });
   }
+
   useEffect(() => {
     setIsLoading(true);
     setSeminars([]);
@@ -39,29 +41,12 @@ function App() {
   const onCloseModal = () => {
     setIsModalOpen(false);
     setCurrentSeminar(null);
-  }
+  };
 
-  if (isLoading) {
-    return (
-      <p className="is-loading">Загрузка...</p>
-    );
-  }
-  if (error) {
-    return (
-      <p className="error-message">Ошибка, Данные не загрузились</p>
-    );
-  }
-  if (seminars.length === 0) {
-    return (
-      <p className="no-data">Нет семинаров</p>
-    );
-  }
   const onDelete = (idSeminar) => {
-    fetch(`http://localhost:3001/seminars/${idSeminar}`,
-      {
-        method: 'DELETE'
-      }
-    )
+    fetch(`http://localhost:3001/seminars/${idSeminar}`, {
+      method: 'DELETE'
+    })
       .then(response => {
         if (!response.ok) {
           throw new Error('Не удалось удалить семинар');
@@ -71,22 +56,39 @@ function App() {
       .catch((error) => {
         console.log(error);
         alert('Не удалось удалить семинар');
-      })
+      });
   };
+
+  const updateSeminar = (updatedSeminar) => {
+    setSeminars((prevSeminars) =>
+      prevSeminars.map((seminar) =>
+        seminar.id === updatedSeminar.id ? updatedSeminar : seminar
+      )
+    );
+  };
+
+  if (isLoading) {
+    return <p className="is-loading">Загрузка...</p>;
+  }
+  if (error) {
+    return <p className="error-message">Ошибка, Данные не загрузились</p>;
+  }
+  if (seminars.length === 0) {
+    return <p className="no-data">Нет семинаров</p>;
+  }
+
   return (
-    <div className="App">
+    <div className="main">
       <h1 className="main-heading">Семинары</h1>
       <div className="cards-container">
         <h2 className="cards-heading">Список семинаров</h2>
         <ul className="card-list">
-          {
-            seminars.map((seminar) => (
-              <Card key={seminar.id} {...seminar} onClick={() => onDelete(seminar.id)} onEdit={() => onEdit(seminar)} />
-            ))
-          }
+          {seminars.map((seminar) => (
+            <Card key={seminar.id} {...seminar} onClick={() => onDelete(seminar.id)} onEdit={() => onEdit(seminar)} />
+          ))}
         </ul>
       </div>
-      {isModalOpen ? <Modal seminar={currenSeminar} onClose={onCloseModal} /> : ''}
+      {isModalOpen ? <Modal seminar={currenSeminar} onClose={onCloseModal} onUpdated={updateSeminar} /> : ''}
     </div>
   );
 }
